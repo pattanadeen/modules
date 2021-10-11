@@ -72,9 +72,9 @@ void* qget(queue_t *qp){
     return newNode->element;
 }
 
-// void qapply(queue_t *qp, void (*fn)(void* elementp)){
-//     struct node *newNode = malloc(sizeof(node_t));
-//     for (newNode = (node_t*)(((queue_s *)qp)->front); newNode != NULL; newNode = newNode->next) {
-//         fn(newNode->element);
-//     }
-// }
+void qapply(queue_t *qp, void (*fn)(void* elementp)){
+    struct node *newNode = malloc(sizeof(node_t));
+    for (newNode = (node_t*)(((queue_s *)qp)->front); newNode != NULL; newNode = newNode->next) {
+        fn(newNode->element);
+    }
+}
