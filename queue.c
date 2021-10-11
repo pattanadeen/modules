@@ -66,21 +66,29 @@ int32_t qput(queue_t *qp, void *elementp){
 
 void* qget(queue_t *qp){
     if(qp == NULL){
-        return 1;
+        printf("qp is NULL");
     }
     struct node *newNode = ((queue_s *)qp)->front;
-    ((queue_s *)qp)->front = (((queue_s *)qp)->front)->next;
+    node_t *temp = (((queue_s *)qp)->front)->next;
     (((queue_s *)qp)->front)->next = NULL;
+    ((queue_s *)qp)->front = temp;
 
     return newNode->element;
 }
 
 void qapply(queue_t *qp, void (*fn)(void* elementp)){
     if(qp == NULL){
-        return 1;
+        printf("qp is NULL");
     }
     struct node *newNode = malloc(sizeof(node_t));
     for (newNode = (node_t*)(((queue_s *)qp)->front); newNode != NULL; newNode = newNode->next) {
         fn(newNode->element);
     }
+}
+
+void* qsearch(queue_t *qp, bool (*searchfn)(void* elementp,const void* keyp), const void* skeyp){
+    if(qp == NULL || skeyp == NULL){
+        printf("qp or skeyp is NULL");
+    }
+
 }
