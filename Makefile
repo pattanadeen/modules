@@ -1,6 +1,6 @@
 CFLAGS=-Wall -pedantic -std=c11 -I. -g
 
-all:   		test_put dev_qapply
+all:   		test_success dev_qapply
 
 %.o:		%.c %.h
 			gcc $(CLAGS) -c $<
@@ -8,8 +8,8 @@ all:   		test_put dev_qapply
 dev_qapply: queue.o car.o dev_qapply.o
 			gcc $(CFLAGS) queue.o car.o dev_qapply.o -o $@
 
-test_put:   queue.o car.o test_put.o
-			gcc $(CFLAGS) queue.o car.o test_put.o -o $@
+test_success:   queue.o car.o test_success.o
+			gcc $(CFLAGS) queue.o car.o test_success.o -o $@
 
 clean:
-			rm -f *.o test_put dev_qapply
+			rm -f *.o test_success dev_qapply

@@ -20,7 +20,8 @@ void print_car_queue(void *qp) {
     
     printf("front --> ");
     for (p = ((node_t *)((queue_s *)qp)->front); p != NULL; p = p->next) {
-        printf("| %s |", ((car_t *)p->element)->plate);
+        car_t * carp = (car_t *)p->element;
+        printf("| %s, %lf, %d |", carp->plate, carp->price, carp->year);
     }
     printf(" <-- back\n");
 
