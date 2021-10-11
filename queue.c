@@ -65,6 +65,9 @@ int32_t qput(queue_t *qp, void *elementp){
 }
 
 void* qget(queue_t *qp){
+    if(qp == NULL){
+        return 1;
+    }
     struct node *newNode = ((queue_s *)qp)->front;
     ((queue_s *)qp)->front = (((queue_s *)qp)->front)->next;
     (((queue_s *)qp)->front)->next = NULL;
@@ -73,6 +76,9 @@ void* qget(queue_t *qp){
 }
 
 void qapply(queue_t *qp, void (*fn)(void* elementp)){
+    if(qp == NULL){
+        return 1;
+    }
     struct node *newNode = malloc(sizeof(node_t));
     for (newNode = (node_t*)(((queue_s *)qp)->front); newNode != NULL; newNode = newNode->next) {
         fn(newNode->element);
