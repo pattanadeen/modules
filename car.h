@@ -18,4 +18,6 @@ typedef struct queue {
 
 car_t *make_car(char *platep, double price, int year);
 
+void print_car(car_t *carp);
+
 void print_car_queue(void *qp);

@@ -5,7 +5,7 @@
 
 int main(int argc, char *argv[]) {
     printf("-----Test 'put' method-----\n");
-    printf("[Test] Put cars\n");
+    printf("[Test] Put 4 cars\n");
 
     // decalre cars
     car_t *car1 = make_car("1gt7117", 2100000, 2018);
@@ -17,18 +17,31 @@ int main(int argc, char *argv[]) {
     queue_t *qp = qopen();
 
     // put cars into queue
+    printf("Put car ");
+    print_car(car1);
     qput(qp, car1);
+    printf("Put car ");
+    print_car(car2);
     qput(qp, car2);
+    printf("Put car ");
+    print_car(car3);
     qput(qp, car3);
+    printf("Put car ");
+    print_car(car4);
     qput(qp, car4);
 
     printf("[Result] ");
     print_car_queue(qp);
 
-    printf("[Test] Put null\n");
+    printf("\n");
 
-    qput(qp, NULL);
+    printf("-----Test 'get' method-----\n");
+    printf("[Test] Get 2 times\n");
 
+    printf("Remove car ");
+    print_car((car_t *)qget(qp));
+    printf("Remove car ");
+    print_car((car_t *)qget(qp));
     printf("[Result] ");
     print_car_queue(qp);
 

@@ -9,10 +9,14 @@ car_t *make_car(char *platep, double price, int year) {
 	    printf("[Error: malloc failed allocating car]\n");
         return NULL;
     }
-    strcpy(carp->plate,platep);
-    carp->price=price;
-    carp->year=year;
+    strcpy(carp->plate, platep);
+    carp->price = price;
+    carp->year = year;
     return carp;
+}
+
+void print_car(car_t *carp) {
+    printf("| Plate: %s, Price: %lf, Year: %d |\n", carp->plate, carp->price, carp->year);
 }
 
 void print_car_queue(void *qp) {
