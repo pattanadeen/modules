@@ -86,9 +86,27 @@ void qapply(queue_t *qp, void (*fn)(void* elementp)){
     }
 }
 
+// bool searchfn(void* elementp,const void* keyp){
+//     if(keyp == NULL || elementp == NULL){
+//         printf("NULL value");
+//         return false;
+//     }
+//     if(elementp == keyp){
+//         return true;
+//     }
+//     else{
+//         return false;
+//     }
+// }
+
 void* qsearch(queue_t *qp, bool (*searchfn)(void* elementp,const void* keyp), const void* skeyp){
     if(qp == NULL || skeyp == NULL){
         printf("qp or skeyp is NULL");
     }
-
+    struct node *newNode = malloc(sizeof(node_t));
+    for (newNode = (node_t*)(((queue_s *)qp)->front); newNode != NULL; newNode = newNode->next) {
+        if(searchfn(newNode->element, skeyp) == true){
+            return newNode->element;
+        }
+    }
 }
