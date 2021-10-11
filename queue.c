@@ -37,6 +37,7 @@ queue_t* qopen(void){
     queue_s *qs = malloc(sizeof(queue_s));
     qs->front = NULL;
     qs->back = NULL;
+    printf("kevin");
     return ((queue_t*)qs);
 }
 
