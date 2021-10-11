@@ -5,7 +5,20 @@
 
 void fn(void *elementp) {
     car_t *carp = (car_t*)elementp;
-    carp->price = 420.01;
+    carp->price = 420;
+}
+
+bool searchfn(void* elementp,const void* keyp){
+    if(keyp == NULL || elementp == NULL){
+        printf("NULL value");
+        return false;
+    }
+    if(elementp == keyp){
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 
 int main(int argc, char *argv[]) {
@@ -20,12 +33,24 @@ int main(int argc, char *argv[]) {
     car_t *test2 = make_car("Sam",21000.75,2019);
     car_t *test3 = make_car("John",20000.25,2018);
     car_t *test4 = make_car("Fred",20000,2021);
-    qput(qp, &test1);
-    qput(qp, &test2);
-    qput(qp, &test3);
-    qput(qp, &test4);
+    qput(qp, test1);
+    qput(qp, test2);
+    qput(qp, test3);
+    qput(qp, test4);
+    print_car_queue(qp);
+    qget(qp);    
+    print_car((car_t*)qsearch(qp,searchfn,(void*)test4));
+    qremove(qp,searchfn,(void*)test2);
+    print_car_queue(qp); 
 
-    qapply(qp,fn);
+    queue_t *qp2 = qopen();
+    car_t *test11 = make_car("BBill",19000,2020);
+    car_t *test22 = make_car("SSam",21000.75,2019);
+    qput(qp2, test11);
+    qput(qp2, test22);
+    qconcat(qp,qp2);
+    print_car_queue(qp);
+
 
     // printf("%p qp1\n",((queue_s *)qp)->back);
 
