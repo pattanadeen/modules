@@ -6,7 +6,7 @@ all:   		test1
 		gcc $(CLAGS) -c $<
 
 test_put:   test_put.o queue.o
-			gcc $(CFLAGS) test_put.o queue.o -o t$@
+			gcc $(CFLAGS) test_put.o queue.o -o $@
 
 clean:
 			rm -f *.o test_put
