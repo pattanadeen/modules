@@ -45,10 +45,14 @@ int main(int argc, char *argv[]) {
     printf("[Result] ");
     print_car_queue(qp);
 
+    qclose(qp);
+
     free(car1);
     free(car2);
     free(car3);
     free(car4);
+
+    
 
     exit(EXIT_SUCCESS);
 }

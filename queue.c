@@ -40,13 +40,27 @@ queue_t* qopen(void){
     return ((queue_t*)qs);
 }
 
+void qclose(queue_t *qp) {
+    node_t *p = ((queue_s *)qp)->front;
+
+    while (p != NULL) {        
+        node_t *temp = p;
+        p = p->next;
+        
+        free(temp);
+    }
+
+    free(p);
+    free(qp);
+}
+
 int32_t qput(queue_t *qp, void *elementp){
     if(qp == NULL || elementp == NULL){
         return 1;
     }
     else{
         if(((queue_s *)qp)->back == NULL){
-            struct node *newNode = malloc(sizeof(node_t));
+            node_t *newNode = malloc(sizeof(node_t));
             newNode->next = NULL;
             newNode->element = elementp;
             ((queue_s *)qp)->back = newNode;
@@ -54,7 +68,7 @@ int32_t qput(queue_t *qp, void *elementp){
             return 0;
         }
         else{
-            struct node *newNode = malloc(sizeof(node_t));
+            node_t *newNode = malloc(sizeof(node_t));
             newNode->next = NULL;
             newNode->element = elementp;
             (((queue_s *)qp)->back)->next = newNode;
@@ -68,12 +82,12 @@ void* qget(queue_t *qp){
     if(qp == NULL){
         printf("qp is NULL");
     }
-    struct node *newNode = ((queue_s *)qp)->front;
-    node_t *temp = (((queue_s *)qp)->front)->next;
-    (((queue_s *)qp)->front)->next = NULL;
-    ((queue_s *)qp)->front = temp;
-
-    return newNode->element;
+    node_t *getNode = ((queue_s *)qp)->front;
+    ((queue_s *)qp)->front = getNode->next;
+    void* element = getNode->element;
+    free(getNode);
+    
+    return element;
 }
 
 void qapply(queue_t *qp, void (*fn)(void* elementp)){
