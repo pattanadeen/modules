@@ -3,8 +3,6 @@
 *.o
 *.a
 *
-!/**/
-!*.*
 
 # Emacs Save Files
 *~
