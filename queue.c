@@ -16,13 +16,6 @@
 
 #define MAXREG 10
 
-typedef struct car {
-	struct car *next;
-	char plate[MAXREG];
-	double price;
-	int year;
-}  car_t;
-
 typedef struct node {
  	struct node *next;
  	void *element;
@@ -57,6 +50,7 @@ void qclose(queue_t *qp) {
 int32_t qput(queue_t *qp, void *elementp){
     if(qp == NULL || elementp == NULL){
         return 1;
+        printf("The input is NULL")
     }
     else{
         if(((queue_s *)qp)->back == NULL){
@@ -79,8 +73,8 @@ int32_t qput(queue_t *qp, void *elementp){
 }
 
 void* qget(queue_t *qp){
-    if(qp == NULL){
-        printf("qp is NULL");
+    if(((queue_s *)qp)->back == NULL || ((queue_s *)qp)->front == NULL){
+        printf("The queue is empty");
     }
     node_t *getNode = ((queue_s *)qp)->front;
     ((queue_s *)qp)->front = getNode->next;
@@ -99,19 +93,6 @@ void qapply(queue_t *qp, void (*fn)(void* elementp)){
         fn(newNode->element);
     }
 }
-
-// bool searchfn(void* elementp,const void* keyp){
-//     if(keyp == NULL || elementp == NULL){
-//         printf("NULL value");
-//         return false;
-//     }
-//     if(elementp == keyp){
-//         return true;
-//     }
-//     else{
-//         return false;
-//     }
-// }
 
 void* qsearch(queue_t *qp, bool (*searchfn)(void* elementp,const void* keyp), const void* skeyp){
     if(qp == NULL || skeyp == NULL){
