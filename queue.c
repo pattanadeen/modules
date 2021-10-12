@@ -49,8 +49,8 @@ void qclose(queue_t *qp) {
 
 int32_t qput(queue_t *qp, void *elementp){
     if(qp == NULL || elementp == NULL){
+        printf("At least of the input is NULL\n");
         return 1;
-        printf("The input is NULL")
     }
     else{
         if(((queue_s *)qp)->back == NULL){
@@ -73,8 +73,13 @@ int32_t qput(queue_t *qp, void *elementp){
 }
 
 void* qget(queue_t *qp){
+    if( qp == NULL){
+        printf("The input is null\n");
+        return (void*)NULL;
+    }
     if(((queue_s *)qp)->back == NULL || ((queue_s *)qp)->front == NULL){
-        printf("The queue is empty");
+        printf("The queue is empty\n");
+        return (void*)NULL;
     }
     node_t *getNode = ((queue_s *)qp)->front;
     ((queue_s *)qp)->front = getNode->next;
@@ -86,7 +91,8 @@ void* qget(queue_t *qp){
 
 void qapply(queue_t *qp, void (*fn)(void* elementp)){
     if(qp == NULL){
-        printf("qp is NULL");
+        printf("qp is NULL\n");
+        return;
     }
     node_t *newNode;
     for (newNode = (node_t*)(((queue_s *)qp)->front); newNode != NULL; newNode = newNode->next) {
@@ -96,7 +102,8 @@ void qapply(queue_t *qp, void (*fn)(void* elementp)){
 
 void* qsearch(queue_t *qp, bool (*searchfn)(void* elementp,const void* keyp), const void* skeyp){
     if(qp == NULL || skeyp == NULL){
-        printf("qp or skeyp is NULL");
+        printf("qp or skeyp is NULL\n");
+        return (void*)NULL;
     }
     node_t *newNode;
     for (newNode = (node_t*)(((queue_s *)qp)->front); newNode != NULL; newNode = newNode->next) {
@@ -108,7 +115,8 @@ void* qsearch(queue_t *qp, bool (*searchfn)(void* elementp,const void* keyp), co
 
 void* qremove(queue_t *qp, bool (*searchfn)(void* elementp,const void* keyp), const void* skeyp){
     if(qp == NULL || skeyp == NULL){
-        printf("qp or skeyp is NULL");
+        printf("qp or skeyp is NULL\n");
+        return (void*)NULL;
     }
     node_t *newNode;
     node_t *preNode = ((queue_s *)qp)->front;
@@ -138,7 +146,8 @@ void* qremove(queue_t *qp, bool (*searchfn)(void* elementp,const void* keyp), co
 
 void qconcat(queue_t *q1p, queue_t *q2p){
     if(q1p == NULL || q2p == NULL){
-        printf("q1p or q2p is NULL");
+        printf("q1p or q2p is NULL\n");
+        return;
     }
     (((queue_s *)q1p)->back)->next = ((queue_s *)q2p)->front;
     ((queue_s *)q1p)->back = ((queue_s *)q2p)->back;

@@ -22,99 +22,56 @@ bool searchfn(void* elementp,const void* keyp){
 }
 
 int main(int argc, char *argv[]) {
-    printf("-----Test 'put' method-----\n");
 
-    printf("[Test] Put 4 cars\n");
-
-    // decalre cars
-    car_t *car1 = make_car("1gt7117", 2100000, 2018);
-    car_t *car2 = make_car("5ab2131", 2700000, 2019);
-    car_t *car3 = make_car("6ff3145", 1100000, 2015);
     car_t *car4 = make_car("4pi3142", 900000, 2017);
 
-    // open a queue
     queue_t *qp = qopen();
 
+    printf("[Test] Put null in\n");
     printf("%d\n", qput(qp, NULL));
+    printf("%d\n", qput(NULL, NULL));
+    printf("\n");
+    printf("[Test] Get from null instead of a queue\n");
+    qget(NULL);
+    printf("[Test] Get from an empty queue\n");
+    qget(qp);
+    printf("\n");
+    printf("[Test] Apply fn to null instead of a queue\n");
+    qapply(NULL, fn);
+    printf("\n");
 
-    // put cars into queue
-    printf("Put car ");
-    print_car(car1);
-    qput(qp, car1);
-    printf("Put car ");
-    print_car(car2);
-    qput(qp, car2);
-    printf("Put car ");
-    print_car(car3);
-    qput(qp, car3);
-    printf("Put car ");
-    print_car(car4);
-    qput(qp, car4);
+    printf("[Test] Search for null instead of a car\n");
 
-    printf("[Result] ");
-    print_car_queue(qp);
+    qsearch(qp, searchfn, NULL);
+    printf("[Test] Search car in null instead of a queue\n");
+    qsearch(NULL, searchfn, (void *)car4);
 
     printf("\n");
 
-    printf("-----Test 'get' method-----\n");
     
-    printf("[Test] Get 2 times\n");
-    printf("Remove car ");
-    print_car((car_t *)qget(qp));
-    printf("Remove car ");
-    print_car((car_t *)qget(qp));
-    printf("[Result] ");
-    print_car_queue(qp);
+    printf("[Test] Remove a car from null instead of queue\n");
+    
+    qremove(NULL, searchfn, (void *)car4);
+
+    printf("[Test] Remove null from a queue instead of a car\n");
+    qremove(qp, searchfn, NULL);
 
     printf("\n");
 
-    printf("-----Test 'qapply' method-----\n");
-    printf("[Test] Set all price to 420\n");
-    qapply(qp, fn);
-    print_car_queue(qp);
-
-    printf("\n");
-
-    printf("-----Test 'qsearch' method-----\n");
-    printf("[Test] Search car4\n");
-    printf("Found car ");
-    print_car(qsearch(qp, searchfn, (void *)car4));
-
-    printf("\n");
-
-    printf("-----Test 'qremove' method-----\n");
-    printf("[Test] Remove car4\n");
-    printf("Remove car ");
-    print_car(qremove(qp, searchfn, (void *)car4));
-    printf("[Result] ");
-    print_car_queue(qp);
-
-    printf("\n");
-
-    printf("-----Test 'qconcat' method-----\n");
-    printf("[Test] Create another queue\n");
     queue_t *qp2 = qopen();
-    car_t *car5 = make_car("3jf2342", 3200000, 2013);
-    car_t *car6 = make_car("0gb6402", 1300000, 2021);
-    qput(qp2, car5);
-    qput(qp2, car6);
-    printf("[Result] ");
-    print_car_queue(qp2);
 
-    printf("[Test] Concat to the old queue\n");
-    qconcat(qp, qp2);
-    printf("[Result] ");
-    print_car_queue(qp);
+
+    printf("[Test] Concat null to null\n");
+    qconcat(NULL, NULL);
+    qconcat(qp,NULL);
+    qconcat(NULL,qp2);
+
 
     qclose(qp);
     qclose(qp2);
 
-    free(car1);
-    free(car2);
-    free(car3);
     free(car4);  
-    free(car5);
-    free(car6); 
+
 
     exit(EXIT_SUCCESS);
 }
