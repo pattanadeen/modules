@@ -94,7 +94,7 @@ void qapply(queue_t *qp, void (*fn)(void* elementp)){
     if(qp == NULL){
         printf("qp is NULL");
     }
-    node_t *newNode = malloc(sizeof(node_t));
+    node_t *newNode;
     for (newNode = (node_t*)(((queue_s *)qp)->front); newNode != NULL; newNode = newNode->next) {
         fn(newNode->element);
     }
@@ -117,7 +117,7 @@ void* qsearch(queue_t *qp, bool (*searchfn)(void* elementp,const void* keyp), co
     if(qp == NULL || skeyp == NULL){
         printf("qp or skeyp is NULL");
     }
-    node_t *newNode = malloc(sizeof(node_t));
+    node_t *newNode;
     for (newNode = (node_t*)(((queue_s *)qp)->front); newNode != NULL; newNode = newNode->next) {
         if(searchfn(newNode->element, skeyp) == true){
             return newNode->element;
@@ -129,7 +129,7 @@ void* qremove(queue_t *qp, bool (*searchfn)(void* elementp,const void* keyp), co
     if(qp == NULL || skeyp == NULL){
         printf("qp or skeyp is NULL");
     }
-    node_t *newNode = malloc(sizeof(node_t));
+    node_t *newNode;
     node_t *preNode = ((queue_s *)qp)->front;
     for (newNode = (node_t*)(((queue_s *)qp)->front); newNode != NULL; newNode = newNode->next) {
         if(searchfn(newNode->element, skeyp) == true){
@@ -139,13 +139,16 @@ void* qremove(queue_t *qp, bool (*searchfn)(void* elementp,const void* keyp), co
                 ((queue_s *)qp)->front = temp;
             }
             else if(newNode == (((queue_s *)qp)->back)){
-                ((queue_s *)qp)->back = preNode->next;
+                ((queue_s *)qp)->back = preNode;
                 preNode->next = NULL;
             }
             else{
                 preNode->next = newNode->next;
             }
-            return newNode->element;
+            void* element = newNode->element;
+            free(newNode);
+    
+            return element;
         }
         preNode = newNode;
     }
