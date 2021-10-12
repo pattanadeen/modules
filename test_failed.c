@@ -59,12 +59,21 @@ int main(int argc, char *argv[]) {
     printf("\n");
 
     queue_t *qp2 = qopen();
-
-
+    queue_t *qp3 = qopen();
+    queue_t *qp4 = qopen();
+    queue_t *qp5 = qopen();
+    qput(qp5,(void*)car4);
+    queue_t *qp6 = qopen();
+    qput(qp6,(void*)car4);
     printf("[Test] Concat null to null\n");
     qconcat(NULL, NULL);
     qconcat(qp,NULL);
     qconcat(NULL,qp2);
+    
+    qconcat(qp3,qp4);
+    qconcat(qp5,qp3);
+    qconcat(qp4,qp6);
+
 
 
     qclose(qp);
