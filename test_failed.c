@@ -69,10 +69,11 @@ int main(int argc, char *argv[]) {
     qconcat(NULL, NULL);
     qconcat(qp,NULL);
     qconcat(NULL,qp2);
-    
-    qconcat(qp3,qp4);
-    qconcat(qp5,qp3);
-    qconcat(qp4,qp6);
+    queue_t *qp7 = qopen();
+    queue_t *qp8 = qopen();
+    qconcat(qp3,qp4); //empty to empty
+    qconcat(qp5,qp7); //non empty to empty
+    qconcat(qp8,qp6); //empty to non empty
 
 
 

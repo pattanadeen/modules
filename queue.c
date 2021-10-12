@@ -111,6 +111,7 @@ void* qsearch(queue_t *qp, bool (*searchfn)(void* elementp,const void* keyp), co
             return newNode->element;
         }
     }
+    return (void *)NULL;
 }
 
 void* qremove(queue_t *qp, bool (*searchfn)(void* elementp,const void* keyp), const void* skeyp){
@@ -147,10 +148,6 @@ void* qremove(queue_t *qp, bool (*searchfn)(void* elementp,const void* keyp), co
 void qconcat(queue_t *q1p, queue_t *q2p){
     if(q1p == NULL || q2p == NULL){
         printf("q1p or q2p is NULL\n");
-        return;
-    }
-    if((((queue_s *)q1p)->back == NULL || ((queue_s *)q1p)->front == NULL) && (((queue_s *)q2p)->back == NULL || ((queue_s *)q2p)->front == NULL)){
-        printf("Both queues are empty\n");
         return;
     }
     if(((queue_s *)q1p)->back == NULL || ((queue_s *)q1p)->front == NULL){
