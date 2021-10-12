@@ -1,3 +1,4 @@
+#include <stdint.h>
 #define MAXREG 10
 
 typedef struct car {
@@ -16,8 +17,15 @@ typedef struct queue {
     struct node *back;
 } queue_s;
 
+typedef struct hashtable {
+	uint32_t size;
+	void *table;
+} hashtable_s;
+
 car_t *make_car(char *platep, double price, int year);
 
 void print_car(car_t *carp);
 
 void print_car_queue(void *qp);
+
+void print_car_hash(void *htp);

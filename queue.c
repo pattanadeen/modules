@@ -103,7 +103,7 @@ void qapply(queue_t *qp, void (*fn)(void* elementp)){
 void* qsearch(queue_t *qp, bool (*searchfn)(void* elementp,const void* keyp), const void* skeyp){
     if(qp == NULL || skeyp == NULL){
         printf("qp or skeyp is NULL\n");
-        return (void*)NULL;
+        return (void *)NULL;
     }
     node_t *newNode;
     for (newNode = (node_t*)(((queue_s *)qp)->front); newNode != NULL; newNode = newNode->next) {

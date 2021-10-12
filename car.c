@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "car.h"
+#include ""
 
 car_t *make_car(char *platep, double price, int year) {
     car_t *carp;
@@ -29,5 +30,20 @@ void print_car_queue(void *qp) {
     }
     printf(" <-- back\n");
 
+    return;
+}
+
+void print_car_hash(void *htp) {
+    int i;
+    uint32_t hsize = ((hashtable_s *)htp)->size;
+    queue_s *table = malloc(sizeof(queue_s) * hsize);
+    table = ((hashtable_s *)htp)->table;
+
+    for (i = 0; i < hsize; i++) {
+        printf("%d -> ");
+        print_car_queue((void *)&table[i]);
+    }
+
+    free(table);
     return;
 }
