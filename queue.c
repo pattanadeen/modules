@@ -50,7 +50,7 @@ void qclose(queue_t *qp) {
 int32_t qput(queue_t *qp, void *elementp){
     if(qp == NULL || elementp == NULL){
         return 1;
-        printf("The input is NULL")
+        printf("The input is NULL");
     }
     else{
         if(((queue_s *)qp)->back == NULL){
