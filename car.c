@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "car.h"
-#include ""
 
 car_t *make_car(char *platep, double price, int year) {
     car_t *carp;
