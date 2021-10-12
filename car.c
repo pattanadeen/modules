@@ -39,7 +39,7 @@ void print_car_hash(void *htp) {
     table = ((hashtable_s *)htp)->table;
 
     for (i = 0; i < hsize; i++) {
-        printf("%d -> ");
+        printf("%d -> ", i);
         print_car_queue((void *)&table[i]);
     }
 
