@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "queue.h"
+#include "car.h"
+
+void fn(void *elementp) {
+    car_t *carp = (car_t*)elementp;
+    carp->price = 420;
+}
+
+bool searchfn(void* elementp,const void* keyp){
+    if(keyp == NULL || elementp == NULL){
+        printf("NULL value");
+        return false;
+    }
+    if(elementp == keyp){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+int main(int argc, char *argv[]) {
+
+    car_t *car4 = make_car("4pi3142", 900000, 2017);
+
+    queue_t *qp = qopen();
+
+    printf("[Test] Put null in\n");
+    printf("%d\n", qput(qp, NULL));
+    printf("%d\n", qput(NULL, NULL));
+    printf("\n");
+    printf("[Test] Get from null instead of a queue\n");
+    qget(NULL);
+    printf("[Test] Get from an empty queue\n");
+    qget(qp);
+    printf("\n");
+    printf("[Test] Apply fn to null instead of a queue\n");
+    qapply(NULL, fn);
+    printf("\n");
+
+    printf("[Test] Search for null instead of a car\n");
+
+    qsearch(qp, searchfn, NULL);
+    printf("[Test] Search car in null instead of a queue\n");
+    qsearch(NULL, searchfn, (void *)car4);
+
+    printf("\n");
+
+    
+    printf("[Test] Remove a car from null instead of queue\n");
+    
+    qremove(NULL, searchfn, (void *)car4);
+
+    printf("[Test] Remove null from a queue instead of a car\n");
+    qremove(qp, searchfn, NULL);
+
+    printf("\n");
+
+    queue_t *qp2 = qopen();
+
+
+    printf("[Test] Concat null to null\n");
+    qconcat(NULL, NULL);
+    qconcat(qp,NULL);
+    qconcat(NULL,qp2);
+
+
+    qclose(qp);
+    qclose(qp2);
+
+    free(car4);  
+
+
+    exit(EXIT_SUCCESS);
+}
