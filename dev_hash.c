@@ -24,6 +24,7 @@ bool searchfn(void* elementp,const void* keyp){
 }
 
 int main(int argc, char *argv[]) {
+
     hashtable_t *htp = hopen(3);
 
     // decalre cars
@@ -37,8 +38,8 @@ int main(int argc, char *argv[]) {
     hput(htp, car3, car3->plate, strlen(car3->plate));
     hput(htp, car4, car4->plate, strlen(car4->plate));
     
-    // printf("Before:\n");
-    // print_car_hash(htp);
+    printf("Before:\n");
+    print_car_hash(htp);
 
     // happly(htp, fn);
 
@@ -47,8 +48,8 @@ int main(int argc, char *argv[]) {
 
     // print_car((car_t *)hsearch(htp,searchfn, car3->plate, strlen(car3->plate));
 
-    printf("Before:\n");
-    print_car_hash(htp);
+    // printf("Before:\n");
+    // print_car_hash(htp);
 
     hremove(htp, searchfn, car1->plate, strlen(car1->plate));
 
