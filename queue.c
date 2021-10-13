@@ -1,7 +1,7 @@
-/* queue.c --- test
+/* queue.c ---
  * 
  * 
- * Author: Chayisara Sakunkoo
+ * Author: Chayisara Sakunkoo, Kevin Chakornsiri, Nuttaset Pattanadee
  * Created: Sat Oct  9 16:57:46 2021 (-0400)
  * Version: 
  * 
@@ -111,6 +111,7 @@ void* qsearch(queue_t *qp, bool (*searchfn)(void* elementp,const void* keyp), co
             return newNode->element;
         }
     }
+    return (void *)NULL;
 }
 
 void* qremove(queue_t *qp, bool (*searchfn)(void* elementp,const void* keyp), const void* skeyp){
@@ -147,6 +148,14 @@ void* qremove(queue_t *qp, bool (*searchfn)(void* elementp,const void* keyp), co
 void qconcat(queue_t *q1p, queue_t *q2p){
     if(q1p == NULL || q2p == NULL){
         printf("q1p or q2p is NULL\n");
+        return;
+    }
+    if(((queue_s *)q1p)->back == NULL || ((queue_s *)q1p)->front == NULL){
+        printf("First queue is empty\n");
+        return;
+    }
+    if(((queue_s *)q2p)->back == NULL || ((queue_s *)q2p)->front == NULL){
+        printf("Second queue is empty\n");
         return;
     }
     (((queue_s *)q1p)->back)->next = ((queue_s *)q2p)->front;
