@@ -19,11 +19,11 @@ void print_car(car_t *carp) {
     printf("| Plate: %s, Price: %lf, Year: %d |\n", carp->plate, carp->price, carp->year);
 }
 
-void print_car_queue(void *qp) {
+void print_car_queue(queue_s *qp) {
     node_t *p;
     
     printf("front --> ");
-    for (p = ((node_t *)((queue_s *)qp)->front); p != NULL; p = p->next) {
+    for (p = ((node_t *)qp->front); p != NULL; p = p->next) {
         car_t * carp = (car_t *)p->element;
         printf("| %s, %lf, %d |", carp->plate, carp->price, carp->year);
     }
@@ -32,17 +32,14 @@ void print_car_queue(void *qp) {
     return;
 }
 
-void print_car_hash(void *htp) {
+void print_car_hash(hashtable_s *htp) {
     int i;
-    uint32_t hsize = ((hashtable_s *)htp)->size;
-    queue_s *table = malloc(sizeof(queue_s) * hsize);
-    table = ((hashtable_s *)htp)->table;
 
-    for (i = 0; i < hsize; i++) {
-        printf("%d -> ", i);
-        print_car_queue((void *)&table[i]);
+    queue_s **htable = ((hashtable_s *)htp)->htable;
+    for (i = 0; i < 32; i++) {
+      printf("row %d | ", i);
+      print_car_queue(htable[i]);
     }
 
-    free(table);
     return;
 }

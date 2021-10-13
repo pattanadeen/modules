@@ -40,4 +40,3 @@ void *hremove(hashtable_t *htp,
 	      bool (*searchfn)(void* elementp, const void* searchkeyp), 
 	      const char *key, 
 	      int32_t keylen);
-

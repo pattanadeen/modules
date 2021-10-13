@@ -2,7 +2,10 @@
  * hash.c -- implements a generic hash table as an indexed set of queues.
  *
  */
+#include <stdlib.h>
 #include <stdint.h>
+#include "hash.h"
+#include "queue.h"
 
 /* 
  * SuperFastHash() -- produces a number between 0 and the tablesize-1.
@@ -55,81 +58,22 @@ static uint32_t SuperFastHash (const char *data,int len,uint32_t tablesize) {
   return hash % tablesize;
 }
 
-typedef struct node {
- 	struct node *next;
- 	void *element;
-} node_t;
-
 typedef struct hashtable {
- 	node_t table[];
+  uint32_t hsize;
+  queue_t **htable;
 } hashtable_s;
 
-hashtable_t *hopen(uint32_t hsize){
-  hashtable_s *htp;
-  sizeof(htp->table) = hsize;
+hashtable_t *hopen(uint32_t hsize) {
+  hashtable_s *htp = malloc(sizeof(hashtable_s));
+  queue_t **htable = malloc(sizeof(queue_t *) * hsize);
   int i;
-  for(i = 0; i<sizeof((hashtable_s *)htp->table); i< i++){
-    (hashtable_s *)htp->table[i] = NULL;
-  }
-  return ((hashtable_t *)htp);
+
+  for (i = 0; i < hsize; i++) {
+    htable[i] = qopen();
   }
 
-void hclose(hashtable_t *htp){
-  int i;
-  for(i = 0; i<sizeof((hashtable_s *)htp->table); i< i++){
-    node_t *p = (hashtable_s *)htp->table[i];
+  htp->hsize = hsize;
+  htp->htable = htable;
 
-    while (p != NULL) {        
-        node_t *temp = p;
-        p = p->next;
-        
-        free(temp);
-    }
-    free(p);
-  }
-  free(htp);
+  return htp;
 }
-
-int32_t hput(hashtable_t *htp, void *ep, const char *key, int keylen){
-  int32_t loc = SuperFastHash(key, keylen, sizeof((hashtable_s *)htp->table));
-  node_t *p = (hashtable_s *)htp->table[loc];
-  if(p = NULL){
-    p->element = ep;
-    return 0;
-  }
-  while (p->next != NULL) {        
-    p = p->next;   
-  }
-  p->next = ep;
-  return 0;
-}
-
-void happly(hashtable_t *htp, void (*fn)(void* ep)){
-  int i;
-  for(i = 0; i<sizeof((hashtable_s *)htp->table); i< i++){
-    node_t *p = (hashtable_s *)htp->table[i];
-
-    while (p != NULL) {        
-      fn(p->element);
-      p = p->next;
-    }
-  }
-}
-
-void *hsearch(hashtable_t *htp, bool (*searchfn)(void* elementp, const void* searchkeyp), const char *key, int32_t keylen){
-  int32_t loc = SuperFastHash(key, keylen, sizeof((hashtable_s *)htp->table));
-  node_t *p = (hashtable_s *)htp->table[loc];
-  int i;
-  for(i = 0; i<sizeof((hashtable_s *)htp->table); i< i++){
-    node_t *p = (hashtable_s *)htp->table[i];
-
-    while (p != NULL) {        
-      if(searchfn(p->element, key) == true){
-        return p->element;
-      }
-      p = p->next;
-    }
-  }
-  return NULL;
-}
-
