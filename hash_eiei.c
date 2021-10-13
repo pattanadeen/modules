@@ -50,7 +50,7 @@ static uint32_t SuperFastHash (const char *data,int len,uint32_t tablesize) {
     hash ^= hash << 10;
     hash += hash >> 1;
   }
-  /* Force "avalanching" of final 127 bits */
+  /* Force "avalanching" of final 127 bitss */
   hash ^= hash << 3;
   hash += hash >> 5;
   hash ^= hash << 4;
