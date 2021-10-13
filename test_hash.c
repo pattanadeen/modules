@@ -26,8 +26,15 @@ bool searchfn(void* elementp,const void* keyp){
 int main(int argc, char *argv[]) {
 
     hashtable_t *ht = hopen(4);
+    
+    hput(ht, NULL, NULL, 0);
 
     car_t *car1 = make_car("1gt7117", 2100000, 2018);
+
+    hput(ht, NULL, car1->plate, strlen(car1->plate));
+    hput(ht, car1, NULL, strlen(car1->plate));
+    hput(ht, car1, car1->plate, 0);
+
     car_t *car2 = make_car("5ab2131", 2700000, 2019);
     car_t *car3 = make_car("6ff3145", 1100000, 2015);
     car_t *car4 = make_car("4pi3142", 900000, 2017);
@@ -43,6 +50,7 @@ int main(int argc, char *argv[]) {
     car_t *car14 = make_car("5ae23131", 2700000, 2019);
     car_t *car15 = make_car("6sf53143", 1100000, 2015);
     car_t *car16 = make_car("4yi33145", 900000, 2017);
+    car_t *car17 = make_car("4Qi33145", 900000, 2017);
 
     hput(ht, car1, car1->plate, strlen(car1->plate));
     hput(ht, car2, car2->plate, strlen(car2->plate));
@@ -61,15 +69,23 @@ int main(int argc, char *argv[]) {
     hput(ht, car15, car15->plate, strlen(car15->plate));
     hput(ht, car16, car16->plate, strlen(car16->plate));
 
-    printf("Before:\n");
+
+    printf("\nBefore:\n");
     
     print_car_hash(ht);
 
     printf("\n");
 
     print_car((car_t *)hsearch(ht, searchfn, car9->plate, strlen(car9->plate)));
+    hsearch(ht, searchfn, car17->plate, strlen(car17->plate));
+    hsearch(ht, searchfn, NULL, strlen(car17->plate));
+    hsearch(ht, searchfn, car17->plate, 0);
 
+    printf("\n");
     hremove(ht, searchfn, car9->plate, strlen(car9->plate));
+    hremove(ht, searchfn, car17->plate, strlen(car17->plate));
+    hremove(ht, searchfn, NULL, strlen(car9->plate));
+    hremove(ht, searchfn, car17->plate, 0);
 
     printf("\n");
 
@@ -94,6 +110,7 @@ int main(int argc, char *argv[]) {
     free(car14);
     free(car15);
     free(car16);
+    free(car17);
 
     exit(EXIT_SUCCESS);
 

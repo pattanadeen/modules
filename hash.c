@@ -1,7 +1,9 @@
 /* 
+// Chayisara Sakunkoo, Kevin Chakornsiri, Nuttaset Pattanadee
  * hash.c -- implements a generic hash table as an indexed set of queues.
  *
  */
+#include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include "hash.h"
@@ -64,6 +66,7 @@ typedef struct hashtable {
 } hashtable_s;
 
 hashtable_t *hopen(uint32_t hsize) {
+ 
   hashtable_s *htp = malloc(sizeof(hashtable_s));
   queue_t **htable = malloc(sizeof(queue_t *) * hsize);
   int i;
@@ -97,9 +100,15 @@ int32_t hput(hashtable_t *htp, void *ep, const char *key, int keylen){
   int32_t loc = SuperFastHash(key, keylen, hsize);
 
   queue_t **htable = ((hashtable_s *)htp)->htable;
+
+  if ( ep == NULL || key == NULL || keylen <= 0){
+    printf("element is null or key is null\n");
+    return 1;
+  }
+
   qput(htable[loc], ep);
 
-  return 1;
+  return 0;
 }
 
 void happly(hashtable_t *htp, void (*fn)(void* ep)){
@@ -119,6 +128,10 @@ void *hsearch(hashtable_t *htp, bool (*searchfn)(void* elementp, const void* sea
   int32_t loc = SuperFastHash(key, keylen, hsize);
 
   queue_t **htable = ((hashtable_s *)htp)->htable;
+  if ( key == NULL || keylen <= 0){
+    printf("key is null\n");
+    return (void*)NULL;
+  }
   
   return qsearch(htable[loc], searchfn, key);
 }
@@ -128,6 +141,11 @@ void *hremove(hashtable_t *htp, bool (*searchfn)(void* elementp, const void* sea
   int32_t loc = SuperFastHash(key, keylen, hsize);
 
   queue_t **htable = ((hashtable_s *)htp)->htable;
+
+  if ( key == NULL || keylen <= 0){
+    printf("key is null\n");
+    return (void*)NULL;
+  }
   
   return qremove(htable[loc],searchfn,key);
 }

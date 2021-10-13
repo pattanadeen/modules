@@ -111,6 +111,7 @@ void* qsearch(queue_t *qp, bool (*searchfn)(void* elementp,const void* keyp), co
             return newNode->element;
         }
     }
+    printf("not found\n");
     return (void *)NULL;
 }
 
@@ -142,6 +143,7 @@ void* qremove(queue_t *qp, bool (*searchfn)(void* elementp,const void* keyp), co
         }
         preNode = newNode;
     }
+    printf("not found\n");
     return NULL;
 }
 
