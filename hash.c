@@ -77,3 +77,57 @@ hashtable_t *hopen(uint32_t hsize) {
 
   return htp;
 }
+
+void hclose(hashtable_t *htp){
+  int i;
+  int hsize = ((hashtable_s *)htp)->hsize;
+  queue_t **htable = ((hashtable_s *)htp)->htable;
+
+  for (i = 0; i < hsize; i++) {
+    qclose(htable[i]);
+  }
+
+  free(htable);
+  free(htp);
+  return;
+}
+
+int32_t hput(hashtable_t *htp, void *ep, const char *key, int keylen){
+  int hsize = ((hashtable_s *)htp)->hsize;
+  int32_t loc = SuperFastHash(key, keylen, hsize);
+
+  queue_t **htable = ((hashtable_s *)htp)->htable;
+  qput(htable[loc], ep);
+
+  return 1;
+}
+
+void happly(hashtable_t *htp, void (*fn)(void* ep)){
+  int i;
+  int hsize = ((hashtable_s *)htp)->hsize;
+
+  for(i = 0; i < hsize; i++){
+    queue_t **htable = ((hashtable_s *)htp)->htable;
+    qapply(htable[i],fn);
+  }
+
+  return;
+}
+
+void *hsearch(hashtable_t *htp, bool (*searchfn)(void* elementp, const void* searchkeyp), const char *key, int32_t keylen){
+  int hsize = ((hashtable_s *)htp)->hsize;
+  int32_t loc = SuperFastHash(key, keylen, hsize);
+
+  queue_t **htable = ((hashtable_s *)htp)->htable;
+  
+  return qsearch(htable[loc], searchfn, key);
+}
+
+void *hremove(hashtable_t *htp, bool (*searchfn)(void* elementp, const void* searchkeyp), const char *key, int32_t keylen){
+  int hsize = ((hashtable_s *)htp)->hsize;
+  int32_t loc = SuperFastHash(key, keylen, hsize);
+
+  queue_t **htable = ((hashtable_s *)htp)->htable;
+  
+  return qremove(htable[loc],searchfn,key);
+}

@@ -34,9 +34,10 @@ void print_car_queue(queue_s *qp) {
 
 void print_car_hash(hashtable_s *htp) {
     int i;
+    queue_s **htable = htp->htable;
+    int hsize = htp->hsize;
 
-    queue_s **htable = ((hashtable_s *)htp)->htable;
-    for (i = 0; i < 32; i++) {
+    for (i = 0; i < hsize; i++) {
       printf("row %d | ", i);
       print_car_queue(htable[i]);
     }
